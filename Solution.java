@@ -1,4 +1,5 @@
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.OutputStreamWriter;
 import java.util.Scanner;
 
@@ -55,6 +56,14 @@ class u {
     } else {
       return current.charAt(index++);
     }
+  }
+
+  public static void fromFile(String path) throws Exception {
+    fromFile(new File(path));
+  }
+
+  public static void fromFile(File file) throws Exception {
+    in = new Scanner(file);
   }
 
   public static void debug(Object... args) {
