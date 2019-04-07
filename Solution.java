@@ -5,9 +5,10 @@ import java.util.Scanner;
 class Solution {
 
   public static void main(String[] args) throws Exception {
+    u.debug = false; solution(args); u.flush(); }
 
-    // Flush the output when ready
-    u.flush();
+  public static void solution(String[] args) throws Exception {
+    u.debug("Debug mode.");
   }
 
 }
@@ -18,6 +19,8 @@ class u {
   public static BufferedWriter outStream;
   public static StringBuilder out;
   public static Scanner in;
+  private static String current;
+  private static int index;
 
   static {
     in = new Scanner(System.in);
@@ -25,7 +28,7 @@ class u {
       outStream = new BufferedWriter(new OutStreamWriter(System.out, "ASCII"), 4096);
     } catch (Exception e) {}
     out = new StringBuilder();
-    debug = true;
+    debug = false;
   }
 
   public static long integer() {
@@ -41,7 +44,17 @@ class u {
   }
 
   public static String word() {
-    return in.next();
+    index = 0;
+    current = in.next();
+    return current;
+  }
+
+  public static char character() {
+    if (current == null || index >= current.length) {
+      return word().charAt(index++);
+    } else {
+      return current.charAt(index++);
+    }
   }
 
   public static void debug(Object... args) {
