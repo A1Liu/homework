@@ -25,7 +25,7 @@ class u {
   static {
     in = new Scanner(System.in);
     try {
-      outStream = new BufferedWriter(new OutStreamWriter(System.out, "ASCII"), 4096);
+      outStream = new BufferedWriter(new OutputStreamWriter(System.out, "ASCII"), 4096);
     } catch (Exception e) {}
     out = new StringBuilder();
     debug = false;
@@ -50,7 +50,7 @@ class u {
   }
 
   public static char character() {
-    if (current == null || index >= current.length) {
+    if (current == null || index >= current.length()) {
       return word().charAt(index++);
     } else {
       return current.charAt(index++);
