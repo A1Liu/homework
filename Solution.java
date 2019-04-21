@@ -14,43 +14,84 @@ class Solution {
 
 }
 
+/**
+ * Class for handling simple IO and debugging.
+ *
+ */
 class u {
 
+  /** Flag for enabling debug mode */
   public static boolean debug;
+
   public static BufferedWriter outStream;
-  public static StringBuilder out;
-  public static Scanner in;
+  private static StringBuilder out;
+
+  public static BufferedReader in;
+  private static StringTokenizer line;
+
+  /** Values for current word, used to synchronize inputting by word and by character */
   private static String current;
   private static int index;
 
   static {
-    in = new Scanner(System.in);
     try {
+      fromStdIO();
+      line = new StringTokenizer("");
       outStream = new BufferedWriter(new OutputStreamWriter(System.out, "ASCII"), 4096);
     } catch (Exception e) {}
     out = new StringBuilder();
     debug = false;
   }
 
-  public static long integer() {
-    return in.nextLong();
+  /**
+   * Get an integer from input
+   */
+  public static long integer() throws Exception {
+    return Long.parseLong(word());
   }
 
-  public static double decimal() {
-    return in.nextDouble();
+  /**
+   * Get a floating point number from input
+   */
+  public static double decimal() throws Exception {
+    return Double.parseDouble(word());
   }
 
-  public static int index() {
-    return in.nextInt();
+  /**
+   * Get an integer/index of an array from input
+   */
+  public static int index() throws Exception {
+    return Integer.parseInt(word());
   }
 
-  public static String word() {
+  private static String nextToken() throws Exception {
+    if (line != null && line.hasMoreTokens()) {
+      return line.nextToken();
+    } else {
+      while(!line.hasMoreTokens()) {
+        line = new StringTokenizer(in.readLine());
+      }
+      return line.nextToken();
+    }
+  }
+
+  /**
+   * Get a string from input
+   */
+  public static String word() throws Exception {
+    if (index != 0 && index < current.length()) {
+      current = current.substring(index);
+      return current;
+    }
     index = 0;
-    current = in.next();
+    current = nextToken();
     return current;
   }
 
-  public static char character() {
+  /**
+   * Get a single character from input
+   */
+  public static char character() throws Exception {
     if (current == null || index >= current.length()) {
       return word().charAt(index++);
     } else {
@@ -63,7 +104,11 @@ class u {
   }
 
   public static void fromFile(File file) throws Exception {
-    in = new Scanner(file);
+    in = new BufferedReader(new FileReader(file));
+  }
+
+  public static void fromStdIO() throws Exception {
+    in = new BufferedReader(new InputStreamReader(System.in));
   }
 
   public static void debug(Object... args) {
